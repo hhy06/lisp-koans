@@ -48,7 +48,99 @@
     (assert-equal "LOREM" (map 'string #'char-upcase string))
     (assert-equal '("L" "O" "R" "E" "M" ) (map 'list #'char-upcase string))
     ;; Not all vectors containing characters are strings.
-    (assert-equalp #(#\L #\O #\R #\E #\M) (map '(vector t) #'char-upcase string))))
+    (assert-equalp _ (map '(vector t) #'char-upcase string))))
+
+(define-test transposition
+  ;; MAPCAR gives the function as many arguments as there are lists.
+  (flet ((transpose (lists) (apply #'mapcar _ lists)))
+    (let ((list '((1 2 3)
+                  (4 5 6)
+                  (7 8 9)))
+          (transposed-list '((1 4 7)
+                             (2 5 8)
+                             (3 6 9))))
+      (assert-equal transposed-list (transpose list))
+      (assert-equal _ (transpose (transpose list))))
+    (assert-equal _ (transpose '(("these" "making")
+                                    ("pretzels" "me")
+                                    ("are" "thirsty"))))))
+
+(define-test reduce
+  ;; The function REDUCE combines the elements of a list by applying a binary
+  ;; function to the elements of a sequence from left to right.
+  (assert-equal 15 (reduce #'+ '(1 2 3 4 5)))
+  (assert-equal _ (reduce #'+ '(1 2 3 4)))
+  (assert-equal _ (reduce #'expt '(1 2 3 4 5))))
+
+(define-test reduce-from-end
+  ;; The :FROM-END keyword argument can be used to reduce from right to left.
+  (let ((numbers '(1 2 3 4 5)))
+    (assert-equal _ (reduce #'cons numbers))
+    (assert-equal _ (reduce #'cons numbers :from-end t)))
+  (let ((numbers '(2 3 2)))
+    (assert-equal _ (reduce #'expt numbers))
+    (assert-equal _ (reduce #'expt numbers :from-end t))))
+
+(define-test reduce-initial-value
+  ;; :INITIAL-VALUE can supply the initial value for the reduction.
+  (let ((numbers '(1 2 3 4 5)))
+    (assert-equal _ (reduce #'* numbers))
+    (assert-equal _ (reduce #'* numbers :initial-value 0))
+    (assert-equal _ (reduce #'* numbers :initial-value -1))))
+
+(define-test inner-product
+  ;; MAPCAR and REDUCE are powerful when used together.
+  ;; Fill in the blanks to produce a local function that computes an inner
+  ;; product of two vectors.
+  (flet ((inner-product (x y) (reduce _ (mapcar _"" ) (map 'list #'char-upcase string))
+    ;; Not all vectors containing characters are strings.
+    (assert-equalp _ (map '(vector t) #'char-upcase string))))
+
+(define-test transposition
+  ;; MAPCAR gives the function as many arguments as there are lists.
+  (flet ((transpose (lists) (apply #'mapcar _ lists)))
+    (let ((list '((1 2 3)
+                  (4 5 6)
+                  (7 8 9)))
+          (transposed-list '((1 4 7)
+                             (2 5 8)
+                             (3 6 9))))
+      (assert-equal transposed-list (transpose list))
+      (assert-equal _ (transpose (transpose list))))
+    (assert-equal _ (transpose '(("these" "making")
+                                    ("pretzels" "me")
+                                    ("are" "thirsty"))))))
+
+(define-test reduce
+  ;; The function REDUCE combines the elements of a list by applying a binary
+  ;; function to the elements of a sequence from left to right.
+  (assert-equal 15 (reduce #'+ '(1 2 3 4 5)))
+  (assert-equal _ (reduce #'+ '(1 2 3 4)))
+  (assert-equal _ (reduce #'expt '(1 2 3 4 5))))
+
+(define-test reduce-from-end
+  ;; The :FROM-END keyword argument can be used to reduce from right to left.
+  (let ((numbers '(1 2 3 4 5)))
+    (assert-equal _ (reduce #'cons numbers))
+    (assert-equal _ (reduce #'cons numbers :from-end t)))
+  (let ((numbers '(2 3 2)))
+    (assert-equal _ (reduce #'expt numbers))
+    (assert-equal _ (reduce #'expt numbers :from-end t))))
+
+(define-test reduce-initial-value
+  ;; :INITIAL-VALUE can supply the initial value for the reduction.
+  (let ((numbers '(1 2 3 4 5)))
+    (assert-equal _ (reduce #'* numbers))
+    (assert-equal _ (reduce #'* numbers :initial-value 0))
+    (assert-equal _ (reduce #'* numbers :initial-value -1))))
+
+(define-test inner-product
+  ;; MAPCAR and REDUCE are powerful when used together.
+  ;; Fill in the blanks to produce a local function that computes an inner
+  ;; product of two vectors.
+  (flet ((inner-product (x y) (reduce _ (mapcar _"" ) (map 'list #'char-upcase string))
+    ;; Not all vectors containing characters are strings.
+    (assert-equalp _ (map '(vector t) #'char-upcase string))))
 
 (define-test transposition
   ;; MAPCAR gives the function as many arguments as there are lists.

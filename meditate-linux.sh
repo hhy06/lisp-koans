@@ -39,6 +39,7 @@ else
 fi
 
 $CONTEMPLATE
-while inotifywait -e modify --exclude "\#.*\#" -q -r koans; do
-    $CONTEMPLATE
-done
+
+#while inotifywait -e modify --exclude "\#.*\#" -q -r koans; do
+#    $CONTEMPLATE
+#done

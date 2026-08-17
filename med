@@ -1,0 +1,2 @@
+sh meditate-linux.sh sbcl | tail -n 20
+
